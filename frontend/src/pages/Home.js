@@ -430,7 +430,9 @@ const Home = () => {
   return (
     <div style={styles.page}>
       {/* TEST BANNER */}
-
+      <div style={styles.testBanner}>
+        🚨 TEST INLINE STYLES — NOUVEAU DESIGN SANS App.css 🚨
+      </div>
 
       {/* Navbar */}
       <nav style={styles.navbar}>
