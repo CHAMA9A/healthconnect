@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 68" width="240" height="68">
+  <defs>
+    <linearGradient id="tubeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00b4d8"/>
+      <stop offset="50%" stop-color="#0077b6"/>
+      <stop offset="100%" stop-color="#1a2a6c"/>
+    </linearGradient>
+  </defs>
+
+  <!-- ====== STETHOSCOPE ICON (centered at ~42, 34) ====== -->
+
+  <!-- Left ear tube (from top-left) -->
+  <path d="M 14 24 C 14 12, 26 6, 34 10" fill="none" stroke="#00b4d8" stroke-width="4" stroke-linecap="round"/>
+
+  <!-- Right ear tube (from top-right) -->
+  <path d="M 56 10 C 64 6, 74 12, 74 24" fill="none" stroke="#1a2a6c" stroke-width="4" stroke-linecap="round"/>
+
+  <!-- Stethoscope circle (chestpiece rim) - gradient tube -->
+  <circle cx="44" cy="34" r="24" fill="none" stroke="url(#tubeGrad)" stroke-width="4"/>
+
+  <!-- Left half of circle filled with teal -->
+  <path d="M 44 10 A 24 24 0 0 0 20 34 A 24 24 0 0 0 44 58" fill="none" stroke="#00b4d8" stroke-width="4"/>
+
+  <!-- Medical cross (darker blue, same as "Health") -->
+  <rect x="40.5" y="22" width="7" height="24" rx="2" fill="#1a2a6c"/>
+  <rect x="32" y="30" width="24" height="7" rx="2" fill="#1a2a6c"/>
+
+  <!-- Chestpiece connection dot at bottom -->
+  <circle cx="44" cy="58" r="3.5" fill="#1a2a6c"/>
+  <line x1="44" y1="58" x2="44" y2="63" stroke="#1a2a6c" stroke-width="2.5" stroke-linecap="round"/>
+
+  <!-- ====== TEXT ====== -->
+
+  <!-- "Health" in dark navy -->
+  <text x="100" y="32" font-family="'Inter', -apple-system, sans-serif" font-size="24" font-weight="800" fill="#1a2a6c" letter-spacing="-0.5">Health</text>
+
+  <!-- "Connect" in medium blue -->
+  <text x="168" y="32" font-family="'Inter', -apple-system, sans-serif" font-size="24" font-weight="800" fill="#0077b6" letter-spacing="-0.5">Connect</text>
+
+  <!-- ====== TAGLINE with divider lines ====== -->
+
+  <!-- Left line -->
+  <line x1="100" y1="48" x2="134" y2="48" stroke="#d0d5dd" stroke-width="1"/>
+
+  <!-- Tagline text -->
+  <text x="138" y="48" font-family="'Inter', -apple-system, sans-serif" font-size="8" font-weight="600" fill="#98a2b3" letter-spacing="1.5" text-anchor="middle">PRENDRE SOIN DE VOUS, CONNECTÉMENT</text>
+
+  <!-- Right line -->
+  <line x1="176" y1="48" x2="210" y2="48" stroke="#d0d5dd" stroke-width="1"/>
+</svg>

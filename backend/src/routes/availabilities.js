@@ -5,6 +5,7 @@ const auth = require("../middleware/auth");
 
 // Médecin uniquement
 router.post("/", auth("DOCTOR"), availabilityController.create);
+router.get("/mine", auth("DOCTOR"), availabilityController.getMine);
 router.put("/:id", auth("DOCTOR"), availabilityController.update);
 router.delete("/:id", auth("DOCTOR"), availabilityController.remove);
 

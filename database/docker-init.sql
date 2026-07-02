@@ -76,6 +76,9 @@ CREATE TABLE appointments (
     status appointment_status NOT NULL DEFAULT 'PENDING',
     reason VARCHAR(500),
     cancellation_reason VARCHAR(500),
+    video_link TEXT,
+    video_room_name VARCHAR(255),
+    video_created_at TIMESTAMP,
     created_at TIMESTAMP DEFAULT NOW(),
     cancelled_at TIMESTAMP
 );
@@ -176,3 +179,10 @@ CREATE TABLE ai_diagnoses (
 
 CREATE INDEX idx_ai_diagnoses_patient ON ai_diagnoses(patient_id);
 CREATE INDEX idx_ai_diagnoses_risk ON ai_diagnoses(risk_level);
+
+-- ============================================================
+-- Migration : ajout des colonnes vidéo pour les rendez-vous existants
+-- ============================================================
+ALTER TABLE appointments ADD COLUMN IF NOT EXISTS video_link TEXT;
+ALTER TABLE appointments ADD COLUMN IF NOT EXISTS video_room_name VARCHAR(255);
+ALTER TABLE appointments ADD COLUMN IF NOT EXISTS video_created_at TIMESTAMP;

@@ -20,6 +20,7 @@ import PatientMessages from "./pages/PatientMessages";
 import DoctorMessages from "./pages/DoctorMessages";
 import PatientAIAssistant from "./pages/PatientAIAssistant";
 import PatientAIHistory from "./pages/PatientAIHistory";
+import Teleconsultation from "./pages/Teleconsultation";
 
 const PrivateRoute = ({ children }) => {
   const { user, loading } = useAuth();
@@ -196,6 +197,18 @@ function App() {
                 <DoctorPatientRecord />
               </ProtectedLayout>
             </RoleRoute>
+          }
+        />
+
+        {/* Téléconsultation (patient + médecin) */}
+        <Route
+          path="/teleconsultation/:appointmentId"
+          element={
+            <PrivateRoute>
+              <ProtectedLayout>
+                <Teleconsultation />
+              </ProtectedLayout>
+            </PrivateRoute>
           }
         />
 

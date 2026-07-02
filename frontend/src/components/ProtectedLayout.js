@@ -54,7 +54,7 @@ const ProtectedLayout = ({ children }) => {
       {/* Sidebar */}
       <aside className="sidebar">
         <div className="sidebar-header">
-          <span className="logo">🏥 HealthConnect</span>
+          <span className="logo"><img src="/logo.svg" alt="HealthConnect" /></span>
         </div>
         <nav className="sidebar-nav">
           {links.map((link, i) =>

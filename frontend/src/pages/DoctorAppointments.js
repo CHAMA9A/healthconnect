@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import api from "../api/axios";
 
 const statusLabels = {
@@ -19,6 +20,7 @@ const DoctorAppointments = () => {
   const [appointments, setAppointments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [message, setMessage] = useState(null);
+  const navigate = useNavigate();
 
   const fetchAppointments = async () => {
     try {
@@ -87,6 +89,15 @@ const DoctorAppointments = () => {
               {apt.status === "PENDING" && (
                 <button className="btn btn-primary btn-sm" onClick={() => handleConfirm(apt.id)}>
                   Confirmer
+                </button>
+              )}
+              {apt.status === "CONFIRMED" && (
+                <button
+                  className="btn btn-primary btn-sm"
+                  style={{ background: "linear-gradient(135deg, #1a73e8 0%, #0d47a1 100%)", border: "none" }}
+                  onClick={() => navigate(`/teleconsultation/${apt.id}`)}
+                >
+                  🎥 Démarrer la téléconsultation
                 </button>
               )}
               {(apt.status === "PENDING" || apt.status === "CONFIRMED") && (

@@ -7,33 +7,13 @@ const DoctorAvailability = () => {
   const [form, setForm] = useState({ date: "", start_time: "", end_time: "" });
   const [editing, setEditing] = useState(null);
   const [message, setMessage] = useState(null);
-  const [doctorId, setDoctorId] = useState(null);
-
-  const fetchDoctorProfile = async () => {
-    try {
-      const docRes = await api.get("/doctors/me");
-      if (docRes.data?.id) {
-        setDoctorId(docRes.data.id);
-        return docRes.data.id;
-      }
-      return null;
-    } catch (err) {
-      return null;
-    }
-  };
-
   const fetchAvailabilities = async () => {
     setLoading(true);
-    const docId = await fetchDoctorProfile();
-    if (!docId) {
-      setLoading(false);
-      return;
-    }
     try {
-      const res = await api.get(`/availabilities/doctor/${docId}`);
+      const res = await api.get("/availabilities/mine");
       setAvailabilities(res.data);
     } catch (err) {
-      // Ne pas altérer doctorId si la récupération des créneaux échoue
+      console.error("Erreur chargement disponibilités:", err);
     } finally {
       setLoading(false);
     }
@@ -85,20 +65,6 @@ const DoctorAvailability = () => {
   };
 
   if (loading) return <div className="loading-screen">Chargement…</div>;
-
-  if (!doctorId) {
-    return (
-      <div className="page-content">
-        <h1>Gestion des disponibilités</h1>
-        <div className="alert alert-warning">
-          Vous devez d'abord compléter votre profil médecin avant de pouvoir gérer vos disponibilités.
-        </div>
-        <a href="/doctor/profile" className="btn btn-primary">
-          Compléter mon profil
-        </a>
-      </div>
-    );
-  }
 
   return (
     <div className="page-content">

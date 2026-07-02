@@ -9,10 +9,10 @@ import api from "../api/axios";
 
 // Palette
 const C = {
-  primary: "#2563eb",
-  primaryHover: "#1d4ed8",
+  primary: "#0084cc",
+  primaryHover: "#006da8",
   white: "#ffffff",
-  bg: "#f0f4fc",
+  bg: "#f0f9ff",
   text: "#111827",
   textMuted: "#6b7280",
   border: "#e5e7eb",
@@ -436,7 +436,7 @@ const Home = () => {
 
       {/* Navbar */}
       <nav style={styles.navbar}>
-        <Link to="/" style={styles.logo}>🏥 HealthConnect</Link>
+        <Link to="/" style={styles.logo}><img src="/logo.svg" alt="HealthConnect" style={{ height: "32px", display: "block" }} /></Link>
         <div style={styles.navBtns}>
           {user ? (
             <button style={{ ...styles.btn, ...styles.btnPrimary }} onClick={() => navigate("/dashboard")}>

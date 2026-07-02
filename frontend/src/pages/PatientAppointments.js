@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import api from "../api/axios";
 
 const statusLabels = {
@@ -31,6 +32,7 @@ const PatientAppointments = () => {
   const [cancelling, setCancelling] = useState(null);
   const [cancelReason, setCancelReason] = useState("");
   const [message, setMessage] = useState(null);
+  const navigate = useNavigate();
 
   const fetchAppointments = async () => {
     try {
@@ -183,6 +185,33 @@ const PatientAppointments = () => {
                       </svg>
                       <span>{apt.doctor_address || "Adresse non renseignée"}</span>
                     </div>
+                    {apt.status === "CONFIRMED" && (
+                      <div className="appt-card-video" style={{ marginTop: "10px" }}>
+                        <button
+                          onClick={() => navigate(`/teleconsultation/${apt.id}`)}
+                          style={{
+                            padding: "8px 16px",
+                            fontSize: "13px",
+                            fontWeight: 600,
+                            background: "linear-gradient(135deg, #1a73e8 0%, #0d47a1 100%)",
+                            color: "#fff",
+                            border: "none",
+                            borderRadius: "8px",
+                            cursor: "pointer",
+                            display: "inline-flex",
+                            alignItems: "center",
+                            gap: "6px",
+                          }}
+                        >
+                          🎥 Rejoindre la téléconsultation
+                        </button>
+                      </div>
+                    )}
+                    {apt.status === "PENDING" && (
+                      <div style={{ marginTop: "10px", fontSize: "12px", color: "#f57f17", fontWeight: 500 }}>
+                        ⏳ En attente de confirmation
+                      </div>
+                    )}
                     {apt.status === "CANCELLED" && apt.cancellation_reason && (
                       <div className="appt-card-cancel-reason">
                         Raison : {apt.cancellation_reason}
