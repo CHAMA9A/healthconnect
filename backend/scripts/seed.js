@@ -388,6 +388,99 @@ async function seed() {
 
     console.log(`  ✅ ${messageCount} messages créés\n`);
 
+    // ---- 10. Créer des pré-diagnostics IA ----
+
+    console.log("--- 10. Création des pré-diagnostics IA ---");
+
+    const aiDiagnoses = [
+      {
+        patientIndex: 0, // Alice
+        symptoms: {
+          fievre: "non",
+          toux: "oui",
+          fatigue: "oui",
+          douleur: "non",
+          intensite_douleur: 0,
+          difficulte_respiratoire: "non",
+          duree_jours: 2,
+          age: 28,
+          maladie_chronique: "non",
+          description_libre: "Toux sèche depuis 2 jours, un peu fatiguée",
+        },
+        riskLevel: "LOW",
+        suggestion: "Symptômes légers (toux, fatigue). Probablement bénin.",
+        recommendation:
+          "Surveillez l'évolution de vos symptômes. Reposez-vous et hydratez-vous. Consultez si les symptômes s'aggravent ou persistent.",
+      },
+      {
+        patientIndex: 1, // Bob
+        symptoms: {
+          fievre: "oui",
+          toux: "oui",
+          fatigue: "oui",
+          douleur: "oui",
+          intensite_douleur: 5,
+          difficulte_respiratoire: "non",
+          duree_jours: 5,
+          age: 45,
+          maladie_chronique: "oui",
+          description_libre: "Fièvre modérée, toux grasse, fatigue générale, douleurs musculaires",
+        },
+        riskLevel: "MEDIUM",
+        suggestion:
+          "Symptômes modérés (fièvre, toux, fatigue, douleur, maladie chronique avec fièvre). Une consultation est conseillée.",
+        recommendation:
+          "Prenez rendez-vous avec votre médecin traitant dans les jours à venir pour une évaluation.",
+      },
+      {
+        patientIndex: 2, // Claire
+        symptoms: {
+          fievre: "oui",
+          toux: "non",
+          fatigue: "oui",
+          douleur: "oui",
+          intensite_douleur: 8,
+          difficulte_respiratoire: "oui",
+          duree_jours: 3,
+          age: 35,
+          maladie_chronique: "non",
+          description_libre: "Difficulté à respirer, forte fièvre, douleur thoracique intense",
+        },
+        riskLevel: "HIGH",
+        suggestion:
+          "Suspicion d'affection respiratoire sévère nécessitant une prise en charge rapide.",
+        recommendation:
+          "Consultez un médecin en urgence ou rendez-vous aux urgences si les symptômes sont graves.",
+      },
+    ];
+
+    const disclaimer =
+      "Ce résultat est indicatif et ne remplace pas un avis médical professionnel. En cas de doute ou de symptômes graves, consultez un médecin.";
+    let aiCount = 0;
+
+    for (const diag of aiDiagnoses) {
+      const patient = patients[diag.patientIndex];
+      if (!patient) continue;
+
+      await pool.query(
+        `INSERT INTO ai_diagnoses (patient_id, symptoms, risk_level, suggestion, recommendation, disclaimer)
+         VALUES ($1, $2, $3, $4, $5, $6)
+         ON CONFLICT DO NOTHING`,
+        [
+          patient.id,
+          JSON.stringify(diag.symptoms),
+          diag.riskLevel,
+          diag.suggestion,
+          diag.recommendation,
+          disclaimer,
+        ]
+      );
+      aiCount++;
+      console.log(`  ✅ Pré-diagnostic ${diag.riskLevel} pour patient_id=${patient.id}`);
+    }
+
+    console.log(`  ✅ ${aiCount} pré-diagnostics IA créés\n`);
+
     console.log("============================================");
     console.log("🌱 Seed terminé avec succès !");
     console.log("============================================");

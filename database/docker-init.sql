@@ -159,3 +159,20 @@ CREATE TABLE messages (
 
 CREATE INDEX idx_messages_appointment ON messages(appointment_id);
 CREATE INDEX idx_messages_sender ON messages(sender_id);
+
+-- ============================================================
+-- Table ai_diagnoses (pré-diagnostics IA)
+-- ============================================================
+CREATE TABLE ai_diagnoses (
+    id SERIAL PRIMARY KEY,
+    patient_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    symptoms JSONB NOT NULL,
+    risk_level VARCHAR(10) NOT NULL CHECK (risk_level IN ('LOW', 'MEDIUM', 'HIGH')),
+    suggestion TEXT NOT NULL,
+    recommendation TEXT NOT NULL,
+    disclaimer TEXT NOT NULL DEFAULT 'Ce résultat est indicatif et ne remplace pas un avis médical professionnel. En cas de doute ou de symptômes graves, consultez un médecin.',
+    created_at TIMESTAMP DEFAULT NOW()
+);
+
+CREATE INDEX idx_ai_diagnoses_patient ON ai_diagnoses(patient_id);
+CREATE INDEX idx_ai_diagnoses_risk ON ai_diagnoses(risk_level);

@@ -13,6 +13,7 @@ const medicalReportRoutes = require("./routes/medicalReports");
 const medicalDocumentRoutes = require("./routes/medicalDocuments");
 const medicalResultRoutes = require("./routes/medicalResults");
 const messageRoutes = require("./routes/messages");
+const aiRoutes = require("./routes/ai");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -37,6 +38,7 @@ app.use("/api/medical-reports", medicalReportRoutes);
 app.use("/api/medical-documents", medicalDocumentRoutes);
 app.use("/api/medical-results", medicalResultRoutes);
 app.use("/api/messages", messageRoutes);
+app.use("/api/ai", aiRoutes);
 
 // Démarrage du serveur
 app.listen(PORT, () => {

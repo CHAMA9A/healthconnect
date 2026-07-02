@@ -18,6 +18,8 @@ import DoctorPatients from "./pages/DoctorPatients";
 import DoctorPatientRecord from "./pages/DoctorPatientRecord";
 import PatientMessages from "./pages/PatientMessages";
 import DoctorMessages from "./pages/DoctorMessages";
+import PatientAIAssistant from "./pages/PatientAIAssistant";
+import PatientAIHistory from "./pages/PatientAIHistory";
 
 const PrivateRoute = ({ children }) => {
   const { user, loading } = useAuth();
@@ -92,6 +94,28 @@ function App() {
             <RoleRoute role="PATIENT">
               <ProtectedLayout>
                 <PatientMedicalRecord />
+              </ProtectedLayout>
+            </RoleRoute>
+          }
+        />
+
+        {/* Patient - Assistant IA */}
+        <Route
+          path="/patient/ai-assistant"
+          element={
+            <RoleRoute role="PATIENT">
+              <ProtectedLayout>
+                <PatientAIAssistant />
+              </ProtectedLayout>
+            </RoleRoute>
+          }
+        />
+        <Route
+          path="/patient/ai-history"
+          element={
+            <RoleRoute role="PATIENT">
+              <ProtectedLayout>
+                <PatientAIHistory />
               </ProtectedLayout>
             </RoleRoute>
           }

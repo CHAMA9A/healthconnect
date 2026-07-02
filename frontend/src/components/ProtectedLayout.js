@@ -8,7 +8,8 @@ const sidebarLinks = {
     { path: "/patient/doctors", label: "👨‍⚕️ Médecins" },
     { path: "/patient/appointments", label: "📅 Mes rendez-vous" },
     { path: "/patient/medical-record", label: "📋 Dossier médical" },
-    { path: "#disabled", label: "🤖 Assistant IA", disabled: true },
+    { path: "/patient/ai-assistant", label: "🤖 Assistant IA" },
+    { path: "/patient/ai-history", label: "📋 Historique IA" },
     { path: "/patient/messages", label: "💬 Messagerie" },
   ],
   DOCTOR: [
@@ -110,6 +111,8 @@ function getPageTitle(path, role) {
     "/patient/appointments": "Mes rendez-vous",
     "/patient/medical-record": "Mon dossier médical",
     "/patient/messages": "Messagerie",
+    "/patient/ai-assistant": "Assistant IA",
+    "/patient/ai-history": "Historique IA",
     "/doctor/messages": "Messagerie",
     "/doctor/profile": "Mon profil médecin",
     "/doctor/availability": "Gestion des disponibilités",
