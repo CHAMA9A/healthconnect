@@ -1,13 +1,24 @@
 const Availability = require("../models/Availability");
 const Doctor = require("../models/Doctor");
 
+// Helper : récupérer ou créer le profil docteur
+async function getOrCreateDoctor(userId) {
+  let doctor = await Doctor.findByUserId(userId);
+  if (!doctor) {
+    doctor = await Doctor.createOrUpdate(userId, {
+      speciality: "Généraliste",
+      description: "",
+      address: "",
+      phone: "",
+    });
+  }
+  return doctor;
+}
+
 // POST /api/availabilities
 exports.create = async (req, res) => {
   try {
-    const doctor = await Doctor.findByUserId(req.user.id);
-    if (!doctor) {
-      return res.status(400).json({ message: "Complétez d'abord votre profil médecin" });
-    }
+    const doctor = await getOrCreateDoctor(req.user.id);
     const { date, start_time, end_time } = req.body;
     if (!date || !start_time || !end_time) {
       return res.status(400).json({ message: "Date, heure de début et heure de fin requis" });
@@ -31,11 +42,22 @@ exports.getByDoctor = async (req, res) => {
   }
 };
 
+// GET /api/availabilities/mine (disponibilités du docteur connecté)
+exports.getMine = async (req, res) => {
+  try {
+    const doctor = await getOrCreateDoctor(req.user.id);
+    const availabilities = await Availability.findByDoctorId(doctor.id);
+    res.json(availabilities);
+  } catch (err) {
+    console.error("Erreur getMine:", err.message);
+    res.status(500).json({ message: "Erreur serveur" });
+  }
+};
+
 // PUT /api/availabilities/:id
 exports.update = async (req, res) => {
   try {
-    const doctor = await Doctor.findByUserId(req.user.id);
-    if (!doctor) return res.status(400).json({ message: "Profil médecin introuvable" });
+    const doctor = await getOrCreateDoctor(req.user.id);
 
     const { date, start_time, end_time } = req.body;
     const availability = await Availability.update(req.params.id, doctor.id, { date, start_time, end_time });
@@ -52,8 +74,7 @@ exports.update = async (req, res) => {
 // DELETE /api/availabilities/:id
 exports.remove = async (req, res) => {
   try {
-    const doctor = await Doctor.findByUserId(req.user.id);
-    if (!doctor) return res.status(400).json({ message: "Profil médecin introuvable" });
+    const doctor = await getOrCreateDoctor(req.user.id);
 
     const deleted = await Availability.remove(req.params.id, doctor.id);
     if (!deleted) {

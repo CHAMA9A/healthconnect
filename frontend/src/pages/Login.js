@@ -34,7 +34,7 @@ const Login = () => {
     <div className="auth-page">
       <div className="auth-card">
         <Link to="/" className="auth-logo">
-          🏥 HealthConnect
+          <img src="/logo.svg" alt="HealthConnect" style={{ height: "32px", width: "auto" }} />
         </Link>
         <h2>Connexion</h2>
         <p className="auth-subtitle">

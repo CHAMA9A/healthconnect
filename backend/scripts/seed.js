@@ -213,13 +213,15 @@ async function seed() {
         createdAppointments.push({ id: pastAppt.rows[0].id, patientId: patient.id, doctorId: doctor.id });
       }
 
-      // Rendez-vous futur (CONFIRMED)
+      // Rendez-vous futur (CONFIRMED) avec lien téléconsultation
+      const futureRoomName = `healthconnect-appointment-future-${pi}`;
+      const futureVideoLink = `https://meet.jit.si/${futureRoomName}`;
       const futureAppt = await pool.query(
-        `INSERT INTO appointments (patient_id, doctor_id, date, start_time, end_time, status, reason)
-         VALUES ($1, $2, $3, $4, $5, 'CONFIRMED', $6)
+        `INSERT INTO appointments (patient_id, doctor_id, date, start_time, end_time, status, reason, video_link, video_room_name, video_created_at)
+         VALUES ($1, $2, $3, $4, $5, 'CONFIRMED', $6, $7, $8, NOW())
          ON CONFLICT DO NOTHING
          RETURNING id`,
-        [patient.id, doctor.id, futureDate, "10:00", "11:00", appointmentReasons[(pi + 1) % appointmentReasons.length]]
+        [patient.id, doctor.id, futureDate, "10:00", "11:00", appointmentReasons[(pi + 1) % appointmentReasons.length], futureVideoLink, futureRoomName]
       );
       if (futureAppt.rows[0]) {
         appointmentCount++;

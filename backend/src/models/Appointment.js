@@ -79,11 +79,17 @@ class Appointment {
   }
 
   static async confirm(id, doctorId) {
+    const roomName = `healthconnect-appointment-${id}`;
+    const videoLink = `https://meet.jit.si/${roomName}`;
     const result = await pool.query(
-      `UPDATE appointments SET status = 'CONFIRMED'
+      `UPDATE appointments
+       SET status = 'CONFIRMED',
+           video_room_name = $3,
+           video_link = $4,
+           video_created_at = NOW()
        WHERE id = $1 AND doctor_id = $2 AND status = 'PENDING'
        RETURNING *`,
-      [id, doctorId]
+      [id, doctorId, roomName, videoLink]
     );
     return result.rows[0] || null;
   }
